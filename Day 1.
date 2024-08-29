@@ -47,6 +47,296 @@ int main()
     return 0;
 }
 // Link problem 2: https://oj.vnoi.info/problem/fcb001_color
+// Code solution:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "XPhuoc"
+#define Fort(i, a, b) for(int i = (a), _b = (b); i <= _b; i++)
+
+const long long MOD = 1e9 + 7;
+
+template<typename T>
+    bool maximize(T &x, T y)
+    {
+        if (x >= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+template<typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+long long exp(long long a, long long b)
+{
+    if (b == 0)
+        return 1LL;
+
+    if (b == 1)
+        return a;
+
+    long long res = exp(a, b / 2);
+
+    res *= res;
+    res %= MOD;
+
+    if (b % 2 == 0)
+        return res;
+
+    return res * a % MOD;
+}
+
+long long C(long long k, long long n)
+{
+    if (k > n)
+        return 0;
+
+    long long res = 1;
+
+    for(long long x = n - k + 1; x <= n; x++)
+    {
+        res *= x;
+        res %= MOD;
+    }
+
+    for(long long x = 1; x <= k; x++)
+    {
+        res *= exp(x, MOD - 2);
+        res %= MOD;
+    }
+
+    return res;
+}
+
+long long n, k;
+
+void Read()
+{
+    cin >> n >> k;
+}
+
+void Solve()
+{
+    cout << C(k, n - k + 1) << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    Read();
+    Solve();
+
+    return 0;
+}
+
 // Link problem 3: https://oj.vnoi.info/problem/fcb001_height
+// Code solution:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "XPhuoc"
+#define Fort(i, a, b) for(int i = (a), _b = (b); i <= _b; i++)
+
+const int N = 1e5;
+
+int n;
+int student[N + 7], iS[N + 7], result[N + 7];
+
+void Read()
+{
+    cin >> n;
+
+    Fort(i, 1, n)
+        cin >> student[i];
+}
+
+void Solve()
+{
+    Fort(i, 1, n)
+        iS[i] = i;
+
+    sort(iS + 1, iS + n + 1, [](int &u, int &v)
+                                {
+                                    return student[u] < student[v];
+                                });
+
+    int ptr = 0;
+
+    Fort(i, 1, n)
+    {
+        while (student[iS[ptr]] < student[iS[i]])
+            ptr++;
+
+        result[iS[i]] = ptr - 1;
+    }
+
+
+    Fort(i, 1, n)
+        cout << result[i] << " ";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    Read();
+    Solve();
+
+    return 0;
+}
+
 // Link problem 4: https://oj.vnoi.info/problem/fcb001_ksum
+// Code solution:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "XPhuoc"
+#define Fort(i, a, b) for(int i = (a), _b = (b); i <= _b; i++)
+
+template<typename T>
+    bool maximize(T &x, T y)
+    {
+        if (x >= y && x != -1)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+const int N = 1e5;
+
+int n, k;
+int candy[N + 7];
+long long pS[N + 7];
+
+void Read()
+{
+    cin >> n >> k;
+
+    Fort(i, 1, n)
+        cin >> candy[i];
+}
+
+void Solve()
+{
+    long long result = 0;
+    pS[0] = 0;
+
+    Fort(i, 1, n)
+    {
+        pS[i] = pS[i - 1] + candy[i];
+
+        maximize(result, pS[i] - pS[max(0, i - k)]);
+    }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    Read();
+    Solve();
+
+    return 0;
+}
+
 // Link problem 5: https://oj.vnoi.info/problem/fcb001_maxsum
+// Code solution:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "XPhuoc"
+#define Fort(i, a, b) for(int i = (a), _b = (b); i <= _b; i++)
+
+template<typename T>
+    bool maximize(T &x, T y)
+    {
+        if (x >= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+template<typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+const int N = 1e5;
+
+int n;
+int a[N + 7];
+long long pS[N + 7];
+
+void Read()
+{
+    cin >> n;
+}
+
+void Solve()
+{
+    long long result = 0, miniRange = 0;
+    pS[0] = 0;
+
+    Fort(i, 1, n)
+    {
+        long long x;
+        cin >> x;
+
+        pS[i] = pS[i - 1] + x;
+
+        maximize(result, pS[i] - miniRange);
+
+        minimize(miniRange, pS[i]);
+    }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    Read();
+    Solve();
+
+    return 0;
+}
+
