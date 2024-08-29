@@ -1,4 +1,51 @@
 // Link problem 1: https://oj.vnoi.info/problem/fcb001_c3
+// Code solution:
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "XPhuoc"
+#define Fort(i, a, b) for(int i = (a), _b = (b); i <= _b; i++)
+
+int n;
+long long X;
+map<long long, long long> mp;
+
+void Read()
+{
+    cin >> n >> X;
+}
+
+void Solve()
+{
+    long long result = 0;
+
+    Fort(i, 1, n)
+    {
+        long long x;
+        cin >> x;
+
+        mp[x]++;
+
+        result += mp[X - x * x];
+    }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    Read();
+    Solve();
+
+    return 0;
+}
 // Link problem 2: https://oj.vnoi.info/problem/fcb001_color
 // Link problem 3: https://oj.vnoi.info/problem/fcb001_height
 // Link problem 4: https://oj.vnoi.info/problem/fcb001_ksum
