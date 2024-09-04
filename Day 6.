@@ -131,13 +131,88 @@ int main()
 
     return 0;
 }
+/*..............................................................................................................................................*/
+// Link problem 3: https://codeforces.com/contest/805/problem/D
+// Code solution:
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
 
 /*..............................................................................................................................................*/
-// Link problem 3: https://codeforces.com/contest/805/problem/C
-// Code solution:
+
+
+const long long MOD = 1e9 + 7;
+
+int n;
+string S;
+
+void Read()
+{
+    cin >> S;
+
+    n = S.size();
+    S = ' ' + S;
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    long long result = 0;
+
+    long long cnt = 0;
+
+    Ford(i, n, 1)
+        if (S[i] == 'b')
+            cnt++;
+        else
+        {
+            result += cnt;
+            result %= MOD;
+
+            cnt *= 2;
+            cnt %= MOD;
+        }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
 /*..............................................................................................................................................*/
-// Link problem 4: https://codeforces.com/contest/805/problem/D
-// Code solution:
-/*..............................................................................................................................................*/
-// Link problem 5: https://codeforces.com/contest/805/problem/E
-// Code solution:
+
