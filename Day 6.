@@ -1,5 +1,143 @@
-https://codeforces.com/contest/805/problem/A
-https://codeforces.com/contest/805/problem/B
-https://codeforces.com/contest/805/problem/C
-https://codeforces.com/contest/805/problem/D
-https://codeforces.com/contest/805/problem/E
+/*..............................................................................................................................................*/
+// Link problem 1: https://codeforces.com/contest/805/problem/A
+// Code solution:
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+/*..............................................................................................................................................*/
+
+int l, r;
+
+void Read()
+{
+    cin >> l >> r;
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    if (l == r)
+        cout << l << "\n";
+    else cout << 2 << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+/*..............................................................................................................................................*/
+// Link problem 2: https://codeforces.com/contest/805/problem/B
+// Code solution:
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+/*..............................................................................................................................................*/
+
+
+int n;
+
+void Read()
+{
+    cin >> n;
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    int wif = 2;
+
+    Fort(i, 1, n)
+    {
+        if (wif > 0)
+            cout << "a";
+        else cout << "b";
+
+        wif--;
+
+        if (wif < -1)
+            wif = 2;
+    }
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
+/*..............................................................................................................................................*/
+// Link problem 2: https://codeforces.com/contest/805/problem/B
+// Code solution:
+/*..............................................................................................................................................*/
+// Link problem 2: https://codeforces.com/contest/805/problem/B
+// Code solution:
+/*..............................................................................................................................................*/
+// Link problem 2: https://codeforces.com/contest/805/problem/B
+// Code solution:
