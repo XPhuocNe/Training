@@ -336,7 +336,9 @@ int main()
 }
 /*..........................................................................................................................................................................*/
 // Link problem 3: https://oj.vnoi.info/problem/bedao_g01_distr
-// Code solution: #include <bits/stdc++.h>
+// Code solution:
+
+#include <bits/stdc++.h>
 #define NAME "XPhuoc"
 
 using namespace std;
