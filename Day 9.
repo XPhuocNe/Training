@@ -1,6 +1,176 @@
 /*..............................................................................................................................................................................*/
-// Link problem: 
+// Link problem: https://oj.vnoi.info/problem/bedao_g02_litpath
 // Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+template <typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+/*..............................................................................................................................................*/
+
+
+struct DSU
+{
+    int n;
+
+    vector<int> cnt, par;
+
+    DSU(int _n): n(_n)
+    {
+        cnt.resize(n + 2, 1);
+
+        par.resize(n + 2);
+
+        Fort(u, 1, n)
+            par[u] = u;
+    }
+
+    int findPar(int u)
+    {
+        if (u == par[u])
+            return u;
+
+        return findPar(par[u]);
+    }
+
+    bool uni(int u, int v)
+    {
+        u = findPar(u);
+        v = findPar(v);
+
+        if (u == v)
+            return 0;
+
+        if (cnt[u] < cnt[v])
+            swap(u, v);
+
+        par[v] = u;
+
+        cnt[u] += cnt[v];
+        return 1;
+    }
+
+    long long rep(int u)
+    {
+        return cnt[findPar(u)];
+    }
+};
+
+struct Edges
+{
+    int u, v, cor;
+
+    Edges(int _u, int _v, int _cor):
+        u(_u), v(_v), cor(_cor) {};
+
+    bool const operator < (const Edges &other)
+    {
+        return cor < other.cor;
+    }
+};
+
+const int N = 1e5;
+
+int n;
+
+vector<Edges> eg;
+
+void Read()
+{
+    cin >> n;
+
+    Fort(i, 1, n - 1)
+    {
+        int u, v, cor;
+
+        cin >> u >> v >> cor;
+
+        eg.push_back({u, v, cor});
+    }
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    DSU PK(n), BL(n);
+
+    sort(eg.begin(), eg.end());
+
+    for(Edges E : eg)
+    {
+        int u = E.u;
+        int v = E.v;
+        int cor = E.cor;
+
+        if (cor == 0)
+            BL.uni(u, v);
+
+
+        if (cor == 1)
+            PK.uni(u, v);
+    }
+
+    long long result = 0;
+
+    Fort(u, 1, n)
+    {
+        long long pink = PK.rep(u) - 1;
+        long long black = BL.rep(u) - 1;
+
+        result += pink * black + pink + black;
+    }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
 /*.............................................................................................................................................................................*
 // Link problem: 
 // Code solution:
