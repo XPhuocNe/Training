@@ -170,3 +170,136 @@ int main()
     return 0;
 }
 /*........................................................................................................................................................................................................*/
+// Link problem 2: https://oj.vnoi.info/problem/bedao_g02_muldiv
+// Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+#define pb push_back
+
+const long long MOD = 998244353;
+
+long long exp(long long a, long long b)
+{
+    if (b == 1)
+        return a % MOD;
+
+    if (b == 0)
+        return 1LL;
+
+    long long res = exp(a, b / 2);
+
+    res *= res;
+    res %= MOD;
+
+    if (b % 2 == 0)
+        return res;
+
+    return res * a % MOD;
+}
+
+const int P = 1e4;
+long long a[P + 7], b[P + 7];
+
+vector<int> prime;
+
+void Erasthenes()
+{
+    bitset<P + 7> sieve;
+
+    prime.clear();
+
+    prime.push_back(2);
+    sieve.set(2);
+
+    for(int x = 3; x <= P; x += 2)
+        sieve.set(x);
+
+    int SP = sqrt(P);
+
+    for(int x = 3; x <= P; x += 2)
+        if (sieve[x])
+        {
+            prime.push_back(x);
+
+            if (x > SP)
+                continue;
+
+            for(int y = x * x; y <= P; y += 2 * x)
+                sieve.reset(y);
+        }
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+//    freopen(NAME".INP", "r", stdin);
+//    freopen(NAME".OUT", "w", stdout);
+
+    Erasthenes();
+
+    int n, q;
+
+    cin >> q;
+
+    while (q--)
+    {
+        cin >> n;
+
+        long long cnt = 1;
+        int m = 0;
+
+        for(int x : prime)
+        {
+            if (x * x > n)
+                break;
+
+            int k = 0;
+
+            while (n % x == 0)
+            {
+                n /= x;
+                k++;
+            }
+
+            cnt *= (k + 1);
+
+            if (k > 0)
+            {
+                ++m;
+                a[m] = x;
+                b[m] = k;
+            }
+        }
+
+        if (n > 1)
+        {
+            ++m;
+            a[m] = n;
+            b[m] = 1;
+            cnt *= 2;
+        }
+
+        long long result = 1;
+
+        Fort(i, 1, m)
+        {
+            result *= exp(exp(a[i], (b[i] + 1) * b[i] / 2), cnt / (b[i] + 1));
+            result %= MOD;
+        }
+
+        cout << result << "\n";
+    }
+
+    return 0;
+}
+
+/*........................................................................................................................................................................................................*/
+
