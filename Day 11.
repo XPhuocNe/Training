@@ -308,4 +308,115 @@ int main()
 }
 
 /*........................................................................................................................................................................................................*/
+// Link problem 3: https://oj.vnoi.info/problem/bedao_g02_zenbeo
+// Code solution: 
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long > pairIL;
+
+template <typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+/*..............................................................................................................................................*/
+
+const int N = 4e2;
+int n, m;
+char rec[N + 7][N + 7];
+int pS[N + 7][N + 7];
+int dp[N + 7];
+int cnt[N + 7][30];
+
+int k;
+
+void Read()
+{
+    cin >> n >> m >> k;
+
+    Fort(x, 1, n)
+        Fort(y, 1, m)
+        {
+            cin >> rec[x][y];
+            pS[x][y] = pS[x - 1][y] + pS[x][y - 1] - pS[x - 1][y - 1] + (rec[x][y] == 'z');
+        }
+
+}
+
+
+void Solve()
+{
+    long long result = 0;
+
+    Fort(x, 1, n)
+    {
+        Fort(u, x, n)
+        {
+            Fort(i, 1, m)
+            {
+                dp[i] = pS[u][i] - pS[x - 1][i];
+
+                Fort(ch, 0, 25)
+                    cnt[i][ch] = cnt[i - 1][ch];
+
+                if (rec[x][i] == rec[u][i])
+                {
+                    int curr = rec[x][i] - 'a';
+
+                    cnt[i][curr]++;
+
+                    int v = lower_bound(dp , dp + i + 1, dp[i] - k) - dp;
+
+                //    cout << x << " " << i << " " << u << " " << i << " " << v << "\n";
+
+                    result += cnt[i][curr] - cnt[v][curr];
+                }
+
+
+            }
+        }
+    }
+
+    cout << result << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        Solve();
+    }
+
+    return 0;
+}
+/*........................................................................................................................................................................................................*/
 
