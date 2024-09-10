@@ -2,6 +2,12 @@
 // Link problem 1: https://oj.vnoi.info/problem/bedao_g02_schedule
 // Code solution:
 
+// Nhan xet 1: ta chi lam cong viec trong ngay thu 1 den min(n, m)
+// sort giam dan theo a
+// xet cong viec thu i, neu ton tai cac vi tri k sao cho lam cong viec thu i la co nghia tuc i - 1 + b[i] <= m
+// -> ta se phai chon lam cong viec thu k, vi neu ta khong chon i ma chon cong viec j > i thi khong lam anh huong den cach chon cach cong viec sau j nhung lai lam giam ket qua
+// -> ta cung phai dong thoi chon lam vao ngay k lon nhat nham toi uu cho cac cong viec phia sau
+
 #include <bits/stdc++.h>
 #define NAME "XPhuoc"
 
