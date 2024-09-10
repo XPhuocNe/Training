@@ -3,121 +3,35 @@ Link problem 1: https://oj.vnoi.info/problem/bedao_g03_bonpair
 Code solution:
 
 #include <bits/stdc++.h>
-#define NAME "XPhuoc"
 
 using namespace std;
 
-#define X first
-#define Y second
-#define pb push_back
-#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
-#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-typedef pair<int, int> pairII;
-typedef pair<int, long long> pairIL;
+    int n, k;
+    cin >> n >> k;
 
-template <typename T>
-    bool maximize(T &x, T y)
+    stack<int> S;
+    long long result = 0;
+
+    int ptr = 0;
+
+    for(int i = 1; i <= n; i++)
     {
-        if (x > y)
-            return 0;
+        int x;
+        cin >> x;
 
-        x = y;
-        return 1;
+        while (!S.empty() && S.top() + x > k)
+            S.pop();
+
+        result += S.size();
+
+        S.push(x);
     }
 
-/*..............................................................................................................................................*/
-
-const int N = 1e4, K = 1e2;
-int n;
-string S;
-
-int q;
-int op;
-
-
-void Read()
-{
-    cin >> q >> op;
-
-    cin >> S;
-
-    n = S.size();
-    S = ' ' + S;
-}
-
-void init()
-{
-
-}
-
-vector<int> ultra(int u, int k)
-{
-    vector<int> cnt(30, 0);
-
-    for(; u <= n; u += k)
-        cnt[S[u] - 'a']++;
-
-    return cnt;
-}
-
-void Solve()
-{
-
-    while (q--)
-    {
-        string a;
-        cin >> a;
-
-        int m = a.size();
-        a = ' ' + a;
-
-        vector<int> dp(op + 2, 0);
-
-
-
-        Fort(i, 1, m)
-        {
-            vector<int> cnt = ultra(i, m);
-            int pick = *max_element(cnt.begin(), cnt.end());
-
-            Ford(x, op, 0)
-            {
-                dp[x] += cnt[a[i] - 'a'];
-
-                if (x > 0)
-                    maximize(dp[x], dp[x - 1] + pick);
-            }
-        }
-
-
-
-
-
-        cout << n - (*max_element(dp.begin(), dp.end())) << "\n";
-    }
-
-}
-int main()
-{
-    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
-    #ifndef ONLINE_JUDGE
-        freopen(NAME".INP", "r", stdin);
-        freopen(NAME".OUT", "w", stdout);
-    #endif // ONLINE_JUDGE
-
-    int TEST = 1;
-
-    if (TEST == 0)
-        cin >> TEST;
-
-    while (TEST--)
-    {
-        Read();
-        init();
-        Solve();
-    }
+    cout << result << "\n";
 
     return 0;
 }
