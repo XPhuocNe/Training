@@ -199,7 +199,7 @@ int main() {
 
 /*..............................................................................................................................................................................*/
 // Link problem 4: https://oj.vnoi.info/problem/bedao_g03_diarr
-// Code solution: 
+// Code solution: 12/20
 
 #include <bits/stdc++.h>
 #define NAME "XPhuoc"
