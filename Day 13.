@@ -243,8 +243,116 @@ int main()
 }
 
 /*................................................................................................................................................................................*/
-// Link problem 3:
+// Link problem 3: https://oj.vnoi.info/problem/bedao_g04_sudi
 // Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+/*..............................................................................................................................................*/
+
+const int INF = 1e9;
+
+const int N = 1e5;
+int n;
+int a[N + 7];
+
+void Read()
+{
+    cin >> n;
+
+    Fort(i, 1, n)
+        cin >> a[i];
+}
+
+void init()
+{
+
+}
+
+long long F(int r)
+{
+    vector<int> L(n + 2);
+    vector<int> R(n + 2);
+
+    stack<int> S;
+    a[0] = r * INF;
+
+    S.push(0);
+
+    Fort(i, 1, n)
+    {
+        while (r * a[S.top()] <= r * a[i])
+            S.pop();
+
+        L[i] = S.top() + 1;
+
+        S.push(i);
+    }
+
+    while (!S.empty())
+        S.pop();
+
+    a[n + 1] = r * INF;
+    S.push(n + 1);
+
+    Ford(i, n, 1)
+    {
+        while (r * a[S.top()] < r * a[i])
+            S.pop();
+
+        R[i] = S.top() - 1;
+
+        S.push(i);
+    }
+
+    long long result = 0;
+
+    Fort(i, 1, n)
+        result += 1LL * a[i] * (R[i] - i + 1) * (i - L[i] + 1);
+
+    return result;
+}
+
+void Solve()
+{
+    cout << F(1) - F(-1) << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
 /*................................................................................................................................................................................*/
 // Link problem 4:
 // Code solution:
