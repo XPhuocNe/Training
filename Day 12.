@@ -198,4 +198,117 @@ int main() {
 }
 
 /*..............................................................................................................................................................................*/
+// Link problem 4: https://oj.vnoi.info/problem/bedao_g03_diarr
+// Code solution: 
 
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+const int MOD = 1e9 + 7;
+
+template <typename T>
+    void total(T &x, T y)
+    {
+        x += y;
+        x %= MOD;
+
+        x += MOD;
+        x %= MOD;
+    }
+
+/*..............................................................................................................................................*/
+
+const int N = 5e2;
+int n;
+int a[N + 7];
+
+int k;
+
+const int MAX = 1e5;
+
+void Read()
+{
+    cin >> n >> k;
+
+    Fort(i, 1, n)
+        cin >> a[i];
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    sort(a + 1, a + n + 1);
+
+    vector<vector<int> > dp(n + 1, vector<int> (MAX + 2, 0));
+    vector<vector<int> > pt(n + 1, vector<int> (MAX + 2, 0));
+
+    Fort(r, 2, k)
+    {
+        swap(dp, pt);
+
+        Fort(i, 2, n)
+        {
+            int ptr = 1;
+
+            Ford(x, a[n] / (r - 1), 0)
+            {
+                while (a[i] - a[ptr] >= x && ptr < i)
+                    ptr++;
+
+                dp[i][x] = dp[i - 1][x];
+
+                if (r > 2)
+                    total(dp[i][x], pt[ptr - 1][x]);
+                else total(dp[i][x], ptr - 1);
+            }
+        }
+    }
+
+    long long result = 0;
+
+    dp[n][a[n] / (k - 1) + 1] = 0;
+
+    Fort(x, 0, a[n] / (k - 1))
+        total(result, 1LL * x * (dp[n][x] - dp[n][x + 1]));
+
+    cout << result << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+/*..............................................................................................................................................................................*/
