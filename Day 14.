@@ -1,6 +1,110 @@
 /*...............................................................................................................................................................................................................*/
-Link problem 1:
+Link problem 1: https://oj.vnoi.info/problem/bedao_g05_tnv
 Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+/*..............................................................................................................................................*/
+
+const int N = 1e6;
+int n;
+int a[N + 7], last[N + 7];
+
+struct queries
+{
+    int t, u, x;
+
+    queries(int _t = 0, int _u = 0, int _x = 0):
+        t(_t), u(_u), x(_x) {};
+};
+
+int q;
+queries ques[N + 7];
+int mS[N + 7];
+
+void Read()
+{
+    cin >> n >> q;
+
+    Fort(i, 1, n)
+    {
+        cin >> a[i];
+        last[i] = 0;
+    }
+}
+
+void init()
+{
+}
+
+void Solve()
+{
+    Fort(i, 1, q)
+    {
+        cin >> ques[i].t;
+
+        if (ques[i].t == 1)
+        {
+            cin >> ques[i].u >> ques[i].x;
+
+            last[ques[i].u] = i;
+        }
+        else
+            cin >> ques[i].x;
+    }
+
+    mS[q + 1] = 0;
+
+    Ford(i, q, 0)
+    {
+        mS[i] = mS[i + 1];
+
+        if (ques[i].t == 2)
+            mS[i] = max(mS[i], ques[i].x);
+    }
+
+    Fort(i, 1, n)
+        if (last[i] == 0)
+            cout << max(a[i], mS[0]) << " ";
+        else cout << max(ques[last[i]].x, mS[last[i]]) << " ";
+
+    cout << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
 
 /*...............................................................................................................................................................................................................*/
 Link problem 2:
