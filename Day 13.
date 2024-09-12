@@ -394,6 +394,153 @@ int main() {
 }
 
 /*................................................................................................................................................................................*/
-// Link problem 5:
+// Link problem 5: https://oj.vnoi.info/problem/bedao_g04_nand
 // Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+const int MOD = 1e9 + 7;
+
+template <typename T>
+    void total(T &x, T y)
+    {
+        x += y;
+        x %= MOD;
+
+        x += MOD;
+        x %= MOD;
+    }
+
+/*..............................................................................................................................................*/
+
+const int N = 1e5;
+
+int n;
+vector<int> g[N + 7];
+int f[N + 7];
+
+long long dp[N + 7][2][2];
+
+vector<pairII> d[3];
+
+void Read()
+{
+    cin >> n;
+
+    Fort(u, 1, n)
+    {
+        int v1, v2;
+        cin >> v1 >> v2 >> f[u];
+
+        g[u].push_back(v1);
+        g[u].push_back(v2);
+    }
+}
+
+void DFS(int u)
+{
+    for(int v : g[u])
+        if (v != 0)
+            DFS(v);
+
+    int v1 = g[u].front();
+    int v2 = g[u].back();
+
+    if (f[u] == -1)
+    {
+        Fort(x, 0, 1)
+            Fort(y, 0, 1)
+            {
+                dp[u][x][y] = 0;
+
+                for(pairII X1 : d[x])
+                    for(pairII X2 : d[y])
+                    {
+                        int p1 = X1.X;
+                        int p2 = X1.Y;
+
+                        int q1 = X2.X;
+                        int q2 = X2.Y;
+
+                        total(dp[u][x][y], dp[v1][p1][q1] * dp[v2][p2][q2] % MOD);
+                    }
+            }
+    }
+    else
+    {
+        Fort(x, 0, 1)
+            Fort(y, 0, 1)
+            {
+                dp[u][x][y] = 0;
+
+                if (y != f[u])
+                    continue;
+
+                for(pairII X1 : d[x])
+                    for(pairII X2 : d[3])
+                    {
+                        int p1 = X1.X;
+                        int p2 = X1.Y;
+
+                        int q1 = X2.X;
+                        int q2 = X2.Y;
+
+                        total(dp[u][x][y], dp[v1][p1][q1] * dp[v2][p2][q2] % MOD);
+                    }
+            }
+    }
+}
+
+void init()
+{
+    d[0] = {{1, 1}};
+    d[1] = {{0, 0}, {0, 1}, {1, 0}};
+    d[3] = {{0, 0}, {1, 1}, {0, 1}, {1, 0}};
+}
+
+void Solve()
+{
+    dp[0][0][0] = 1;
+    dp[0][1][1] = 1;
+
+    DFS(1);
+
+    cout << (dp[1][1][0] + dp[1][0][1]) % MOD << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
 /*................................................................................................................................................................................*/
