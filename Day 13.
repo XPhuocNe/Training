@@ -354,8 +354,45 @@ int main()
 }
 
 /*................................................................................................................................................................................*/
-// Link problem 4:
+// Link problem 4: https://oj.vnoi.info/problem/bedao_g04_zeze
 // Code solution:
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int div2 = 0, div5 = 0;
+    
+    int n;
+    cin >> n;
+    
+    while (n--)
+    {
+        int x;
+        cin >> x;
+        
+        while (x % 2 == 0)
+        {
+            x /= 2;
+            div2++;
+        }
+        
+        while (x % 5 == 0)
+        {
+            x /= 5;
+            div5++;
+        }
+    }
+    
+    cout << min(div2, div5) << "\n";
+    
+    return 0;
+}
+
 /*................................................................................................................................................................................*/
 // Link problem 5:
 // Code solution:
