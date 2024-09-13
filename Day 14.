@@ -107,8 +107,240 @@ int main()
 }
 
 /*...............................................................................................................................................................................................................*/
-Link problem 2:
+Link problem 2: https://oj.vnoi.info/problem/bedao_g05_gfprob
 Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+typedef pair<long long, int> pairLI;
+
+template <typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+/*..............................................................................................................................................*/
+
+struct Edges
+{
+    int u, v;
+    long long w;
+
+    Edges(int _u = 0, int _v = 0, long long _w = 0):
+        u(_u), v(_v), w(_w) {};
+
+    bool const operator < (const Edges &other)
+    {
+        return w < other.w;
+    }
+};
+
+struct DSU
+{
+    int n;
+    vector<int> par;
+    vector<int> cnt;
+
+    DSU(int _n = 0): n(_n)
+    {
+        par.resize(n + 2);
+        cnt.resize(n + 2, 1);
+
+        Fort(i, 1, n)
+            par[i] = i;
+    }
+
+    int findPar(int u)
+    {
+        if (u == par[u])
+            return u;
+
+        return par[u] = findPar(par[u]);
+    }
+
+    bool uni(int u, int v)
+    {
+        u = findPar(u);
+        v = findPar(v);
+
+        if (u == v)
+            return 0;
+
+        if (cnt[u] < cnt[v])
+            swap(u, v);
+
+        par[v] = u;
+
+        cnt[u] += cnt[v];
+
+        return 1;
+    }
+};
+
+const long long INF = 1e18;
+
+const int N = 1e5;
+
+int n;
+
+int m;
+vector<pairII> g[N + 7];
+vector<Edges> eg;
+
+int k;
+vector<int> gf;
+
+int s;
+
+long long Kruskal(vector<Edges> &eg)
+{
+    sort(eg.begin(), eg.end());
+
+    DSU D(n);
+
+    long long res = 0;
+
+    for(Edges E : eg)
+    {
+        int u = E.u;
+        int v = E.v;
+        long long w = E.w;
+
+        if (D.uni(u, v))
+            res += w;
+    }
+
+    return res;
+}
+
+pair<vector<long long>, vector<int> > Dijkstra(int n, vector<int> &S, vector<pairII> *g)
+{
+    vector<long long> d(n + 2, INF);
+    vector<int> a(n + 2, 0);
+
+    priority_queue<pairLI, vector<pairLI>, greater<pairLI> > pq;
+
+    for(int x : S)
+    {
+        d[x] = 0;
+        a[x] = x;
+        pq.push({0LL, x});
+    }
+
+
+    while (!pq.empty())
+    {
+        int u = pq.top().Y;
+        long long dis = pq.top().X;
+        pq.pop();
+
+        if (dis > d[u])
+            continue;
+
+        for(pairII E : g[u])
+        {
+            int v = E.X;
+            int w = E.Y;
+
+            if (minimize(d[v], d[u] + w))
+            {
+                pq.push({d[v], v});
+                a[v] = a[u];
+            }
+        }
+    }
+
+    return {d, a};
+}
+
+void Read()
+{
+    cin >> n >> m >> s >> k;
+
+    gf.resize(k);
+
+    Fort(i, 0, k - 1)
+        cin >> gf[i];
+
+    Fort(i, 1, m)
+    {
+        int u, v, w;
+        cin >> u >> v >> w;
+
+        g[u].push_back({v, w});
+        g[v].push_back({u, w});
+
+        eg.push_back({u, v, w});
+    }
+}
+
+void init()
+{
+}
+
+void Solve()
+{
+    vector<int> vec = {s};
+
+    pair<vector<long long>, vector<int> > P = Dijkstra(n, gf, g);
+
+    vector<long long> d = P.X;
+    vector<int> a = P.Y;
+
+    vector<Edges> road;
+
+    for(Edges E : eg)
+    {
+        int u = E.u;
+        int v = E.v;
+        long long w = E.w;
+
+        road.push_back({a[u], a[v], d[u] + d[v] + w});
+    }
+
+    long long result = Kruskal(road) + d[s];
+
+    cout << result << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
 
 /*...............................................................................................................................................................................................................*/
 Link problem 3:
