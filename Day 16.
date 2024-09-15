@@ -1,13 +1,376 @@
 /*.....................................................................................................................................................................................*/
-// Link problem 1:
+// Link problem 1: https://oj.vnoi.info/problem/bedao_g07_colours
 // Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+
+const long long MOD = 1e9 + 7;
+
+template<typename T>
+    void mul(T &x, T y)
+    {
+        x *= y;
+        x %= MOD;
+    }
+
+/*..............................................................................................................................................*/
+
+long long P(int k, int n)
+{
+    if (k > n)
+        return 0;
+
+    long long res = 1;
+
+    Fort(x, n - k + 1, n)
+        mul(res, 1LL * x);
+
+    return res;
+}
+
+const int N = 1e5;
+
+int n, k;
+
+vector<int> g[N + 7];
+
+long long result = 1;
+
+void Read()
+{
+    cin >> n >> k;
+
+    Fort(i, 1, n - 1)
+    {
+        int u, v;
+        cin >> u >> v;
+
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+}
+
+void DFS(int u, int par)
+{
+    for(int v : g[u])
+        if (v != par)
+            DFS(v, u);
+
+    if (par == 0)
+    {
+        mul(result, 1LL * k);
+
+        mul(result, P(g[u].size(), k - 1));
+    } else mul(result, P(g[u].size() - 1, k - 2));
+}
+
+void init()
+{
+
+}
+
+void Solve()
+{
+    result = 1;
+
+    DFS(1, 0);
+
+    cout << result << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
 /*.....................................................................................................................................................................................*/
-// Link problem 2:
+// Link problem 2: https://oj.vnoi.info/problem/bedao_g07_password
 // Code solution:
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int INF = 1e9 + 7;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    cin >> n;
+    
+    int result = -INF;
+    
+    for(int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        result = max(result, x);
+    }
+    
+    cout << result << "\n";
+    
+    return 0;
+}
+
 /*.....................................................................................................................................................................................*/
-// Link problem 3:
+// Link problem 3: https://oj.vnoi.info/problem/bedao_g07_resort
 // Code solution:
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+bool isPrime(int x)
+{
+    for(int i = 2; i * i <= x ; i++)
+        if (x % i == 0)
+        return 0;
+        
+    return x > 1;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    cin >> n;
+    
+    int one = 0, two = 0;
+    
+    for(int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        
+        if (x == 1)
+            one++;
+        else two++;
+    }
+    
+    int result = 0;
+    
+    if (one == 0)
+    {
+        int x = 0;
+        
+        for(; two > 0; two--)
+        {
+            x += 2;
+            result += isPrime(x);
+        }
+        
+        cout << result << "\n";
+        return 0;
+    }
+    
+    if (two == 0)
+    {
+        int x = 0;
+        
+        for(; one > 0; one--)
+        {
+            x++;
+            result += isPrime(x);
+        }
+        
+        cout << result << "\n";
+        return 0;
+    }
+    
+    int x = 0;
+    
+    x += 2;
+    result += isPrime(x);
+    two--;
+    
+    x++;
+    result += isPrime(x);
+    one--;
+    
+    for(; two > 0; two--)
+    {
+        x += 2;
+        result += isPrime(x);
+    }
+    
+    for(; one > 0; one--)
+    {
+        x++;
+        result += isPrime(x);
+    }
+        
+    cout << result << "\n";
+    
+    return 0;
+}
 /*.....................................................................................................................................................................................*/
-// Link problem 4:
+// Link problem 4: https://oj.vnoi.info/problem/bedao_g07_trip
 // Code solution:
+
+#include <bits/stdc++.h>
+#define NAME "XPhuoc"
+
+using namespace std;
+
+#define X first
+#define Y second
+#define pb push_back
+#define Fort(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
+#define Ford(i, a, b) for (int i = (a), _b = (b); i >= _b; i--)
+
+typedef pair<int, int> pairII;
+typedef pair<int, long long> pairIL;
+typedef pair<long long, int> pairLI;
+
+template <typename T>
+    bool minimize(T &x, T y)
+    {
+        if (x <= y)
+            return 0;
+
+        x = y;
+        return 1;
+    }
+
+/*..............................................................................................................................................*/
+
+const int N = 1e5;
+
+int n;
+int a[N + 7];
+
+int bit[N + 7];
+
+void update(int x, int val)
+{
+    for(; x <= n; x += x & -x)
+        bit[x] += val;
+}
+
+int get(int x)
+{
+    if (x == 0)
+        return 0;
+
+    int res = 0;
+
+    for(; x > 0; x -= x & - x)
+        res += bit[x];
+
+    return res;
+}
+
+int query(int l, int r)
+{
+    return get(r) - get(l - 1);
+}
+
+void Read()
+{
+    cin >> n;
+
+    Fort(i, 1, n)
+        cin >> a[i];
+}
+
+void init()
+{
+    vector<pairII> vec(n + 2);
+    vector<int> id(n + 2, 0);
+
+    Fort(i, 1, n)
+        vec[i] = {a[i], i};
+
+    sort(vec.begin() + 1, vec.begin() + n + 1);
+
+    int cnt = 0;
+    int i = 1;
+    
+    while (i <= n)
+    {
+        int x = vec[i].X;
+        cnt++;
+
+        for(; i <= n && x == vec[i].X; i++)
+            a[vec[i].Y] = cnt;
+    }
+}
+
+void Solve()
+{
+    vector<int> last(n + 2, 0);
+    long long result = 0;
+
+    Fort(r, 1, n)
+    {
+        int l = last[a[r]];
+
+        if (l + 1 <= r - 1)
+            result += query(l + 1, r - 1);
+
+        if (l != 0)
+            update(l, -1);
+
+        last[a[r]] = r;
+        update(r, 1);
+    }
+
+    cout << result << "\n";
+}
+int main()
+{
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    #ifndef ONLINE_JUDGE
+        freopen(NAME".INP", "r", stdin);
+        freopen(NAME".OUT", "w", stdout);
+    #endif // ONLINE_JUDGE
+
+    int TEST = 1;
+
+    if (TEST == 0)
+        cin >> TEST;
+
+    while (TEST--)
+    {
+        Read();
+        init();
+        Solve();
+    }
+
+    return 0;
+}
+
 /*.....................................................................................................................................................................................*/
