@@ -2,6 +2,13 @@
 // Link problem 1: https://oj.vnoi.info/problem/bedao_g07_colours
 // Code solution:
 
+// Giả sử đỉnh gốc p đã được tô một màu bất kì, ta tìm cách để tô màu cho các con và cháu của gốc đó.
+// Xét đỉnh u bất kì có số lượng con trực tiếp là c: Giả sử đã tô màu đến được đỉnh u, ta cần tô tiếp các con của u
+// TH1: nếu u là gốc, ta cần tô màu các con của nó sao cho không có 2 con nào trùng màu đồng thời không trùng màu với u -> số cách: P(c, k - 1) 
+// TH2: nếu u không là gốc, tức u có nút ông, ta cần tô màu sao cho các con của nó sao cho không có 2 con nào trùng màu nhau đồng thời không trùng màu của cha và ông -> số cách P(c, k - 2)
+
+// vì gốc p có k cách tô như vậy nên đáp án sẽ nhân thêm với k.
+
 #include <bits/stdc++.h>
 #define NAME "XPhuoc"
 
